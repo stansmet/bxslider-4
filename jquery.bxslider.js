@@ -845,6 +845,30 @@
 				}
 			}
 		}
+
+        /**
+         * Same as above but for custom controls
+         */
+        var updateDirectionCustomControls = function($prev, $next){
+            if(getPagerQty() == 1){
+                $prev.addClass('disabled');
+                $next.addClass('disabled');
+            }else if(!slider.settings.infiniteLoop){
+                // if first slide
+                if (slider.active.index == 0){
+                    $prev.addClass('disabled');
+                    $next.removeClass('disabled');
+                    // if last slide
+                }else if(slider.active.index == getPagerQty() - 1){
+                    $next.addClass('disabled');
+                    $prev.removeClass('disabled');
+                    // if any slide in the middle
+                }else{
+                    $prev.removeClass('disabled');
+                    $next.removeClass('disabled');
+                }
+            }
+        }
 		
 		/**
 		 * Initialzes the auto process
@@ -1251,6 +1275,13 @@
 		 */
 		el.getSlideCount = function(){
 			return slider.children.length;
+		}
+
+		/**
+		 * Update state of custom controls
+		 */
+		el.updateCustomControls = function($prev, $next){
+			return updateDirectionCustomControls($prev, $next);
 		}
 
 		/**
